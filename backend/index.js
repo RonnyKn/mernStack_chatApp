@@ -1,6 +1,7 @@
 import Express from "express"
 import dotenv from "dotenv"
 import { connection } from "../backend/config/db.js"
+import { chats } from "./data/data.js"
 import colors from "colors"
 
 dotenv.config()
@@ -12,9 +13,9 @@ app.get("/", (req, res) => {
   res.send("API running successfully")
 })
 
-// app.get("/api/chat", (req, res) => {
-//   res.send(chats)
-// })
+app.get("/api/chat", (req, res) => {
+  res.send(chats)
+})
 
 app.listen(
   port,
