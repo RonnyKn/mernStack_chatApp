@@ -5,11 +5,14 @@ import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
 const Login = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   return (
     <div>
       <TextField
+        value={email}
         type="text"
         variant="outlined"
         label="Username"
@@ -17,6 +20,7 @@ const Login = () => {
         style={{ width: "100%", marginBottom: "10px" }}
       />
       <TextField
+        value={password}
         type={showPassword ? "text" : "password"}
         variant="outlined"
         label="Password"
@@ -43,8 +47,16 @@ const Login = () => {
         Login
         <LoginIcon />
       </Button>
-      <Button variant="contained" color="error" style={{ width: "100%" }}>
-        Get User Guest Creddential
+      <Button
+        variant="contained"
+        color="error"
+        style={{ width: "100%" }}
+        onClick={() => {
+          setEmail("Guest@example.com")
+          setPassword("abc123")
+        }}
+      >
+        Get Guest User Credential
       </Button>
     </div>
   )
