@@ -7,31 +7,27 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff"
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
-  const handleMouseDownPassword = () => setShowPassword(!showPassword)
-
   return (
     <div>
       <TextField
         type="text"
         variant="outlined"
-        label="username"
+        label="Username"
         required
         style={{ width: "100%", marginBottom: "10px" }}
       />
       <TextField
         type={showPassword ? "text" : "password"}
         variant="outlined"
-        label="username"
+        label="Password"
         required
         style={{ width: "100%", marginBottom: "10px" }}
         InputProps={{
-          // <-- This is where the toggle button is added.
           endAdornment: (
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
               >
                 {showPassword ? <Visibility /> : <VisibilityOff />}
               </IconButton>
