@@ -1,8 +1,14 @@
-import { Button, TextField } from "@mui/material"
-import React from "react"
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material"
+import React, { useState } from "react"
 import LoginIcon from "@mui/icons-material/Login"
+import Visibility from "@mui/icons-material/Visibility"
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClickShowPassword = () => setShowPassword(!showPassword)
+  const handleMouseDownPassword = () => setShowPassword(!showPassword)
+
   return (
     <div>
       <TextField
@@ -13,11 +19,25 @@ const Login = () => {
         style={{ width: "100%", marginBottom: "10px" }}
       />
       <TextField
-        type="password"
+        type={showPassword ? "text" : "password"}
         variant="outlined"
         label="username"
         required
         style={{ width: "100%", marginBottom: "10px" }}
+        InputProps={{
+          // <-- This is where the toggle button is added.
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
       <Button
         variant="contained"
