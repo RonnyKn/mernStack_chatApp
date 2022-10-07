@@ -21,16 +21,3 @@
   padding: 1rem;
   border-radius: 10px;
 }
-
-.login {
-  height: 2rem;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
-
-.signup {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-}
