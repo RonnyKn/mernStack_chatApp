@@ -36,3 +36,21 @@ export const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Fail to create new User")
   }
 })
+
+export const authUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+
+  const user = await User.findOne({ email })
+
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      name: user.name,
+      password: user.password,
+      pic: user.pic,
+      token: generateToken(user._id),
+    })
+  } else {
+    throw new Error("Invalid Email or Password")
+  }
+})
