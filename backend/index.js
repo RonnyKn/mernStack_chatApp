@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import { connection } from "../backend/config/db.js"
 import { userRoutes } from "./routes/userRoutes.js"
 import colors from "colors"
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js"
 
 dotenv.config()
 
@@ -13,6 +14,9 @@ const port = process.env.PORT || 8800
 app.use(Express.json()) //to accept json data
 
 app.use("/api/user", userRoutes)
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.get("/", (req, res) => {
   res.send("API running successfully")
