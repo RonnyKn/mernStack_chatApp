@@ -37,37 +37,7 @@ const Signup = () => {
 
   const postDetails = (pics) => {
     setLoading(true)
-    if (pic === undefined) {
-      ;<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Please Select Your Picture!
-        </Alert>
-      </Snackbar>
-      return
-    }
-    if (
-      pics.type === "image/jpeg" ||
-      pics.type === "image/png" ||
-      pics.type === "image/jpg"
-    ) {
-      const data = new FormData()
-      data.append("file".pics)
-      data.append("upload_preset", "chatApp")
-      data.append("cloud_name", "dvgyvboyz")
-      fetch("https://api.cloudinary.com/v1_1/dvgyvboyz/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPic(data.url.toString())
-          setLoading(false)
-        })
-        .catch((err) => {
-          console.log(err)
-          setLoading(false)
-        })
-    } else
+    if (pic === undefined)
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           Please Select Your Picture!
