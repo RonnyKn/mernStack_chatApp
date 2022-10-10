@@ -1,4 +1,11 @@
-import { Button, IconButton, InputAdornment, TextField } from "@mui/material"
+import {
+  Alert,
+  Button,
+  IconButton,
+  InputAdornment,
+  Snackbar,
+  TextField,
+} from "@mui/material"
 import React, { useState } from "react"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
@@ -6,10 +13,69 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff"
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [name, setName] = useState()
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [confirmPassword, setConfirmPassword] = useState()
+  const [pic, setPic] = useState()
+  const [loading, setLoading] = useState(false)
+  const [open, setOpen] = React.useState(false)
 
+  const handleClick = () => {
+    setOpen(true)
+  }
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return
+    }
+
+    setOpen(false)
+  }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword(!showConfirmPassword)
+
+  const postDetails = (pics) => {
+    setLoading(true)
+    if (pic === undefined) {
+      ;<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Please Select Your Picture!
+        </Alert>
+      </Snackbar>
+      return
+    }
+    if (
+      pics.type === "image/jpeg" ||
+      pics.type === "image/png" ||
+      pics.type === "image/jpg"
+    ) {
+      const data = new FormData()
+      data.append("file".pics)
+      data.append("upload_preset", "chatApp")
+      data.append("cloud_name", "dvgyvboyz")
+      fetch("https://api.cloudinary.com/v1_1/dvgyvboyz/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString())
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+          setLoading(false)
+        })
+    } else
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Please Select Your Picture!
+        </Alert>
+      </Snackbar>
+    setLoading(false)
+    return
+  }
 
   return (
     <div>
@@ -66,14 +132,24 @@ const Signup = () => {
           ),
         }}
       />
+      <p style={{ fontSize: "12px" }}>
+        <em> Upload Your Profile Picture</em>
+      </p>
       <input
         accept="image/*"
-        style={{ display: "none" }}
+        // style={{ display: "none" }}
         id="pict-button-file"
         multiple
         type="file"
+        label="abababa"
+        style={{
+          marginBottom: "10px",
+          padding: "10px",
+          width: "95%",
+          borderRadius: "10px",
+        }}
       />
-      <label htmlFor="pict-button-file">
+      {/* <label htmlFor="pict-button-file">
         <Button
           variant="outlined"
           component="span"
@@ -81,7 +157,7 @@ const Signup = () => {
         >
           Upload Your Picture
         </Button>
-      </label>
+      </label> */}
       <Button variant="contained" style={{ width: "100%" }}>
         Sign Up
       </Button>
